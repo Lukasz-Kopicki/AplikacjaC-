@@ -34,8 +34,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpGet]
         public ViewResult ManageCategories()
         {
-            //pobranie wszytkich kategorii - ustawic  przypisanie do zmiennej wywolania funkcji- 
-            //repository nie moze byc tu zaimplementowany
+            
             var model = _categoriesRepository.GetAllCategories();
             return View(model);
         }
@@ -43,8 +42,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpGet]
         public ViewResult CreateCategory()
         {
-            //implementacja viewBag przeniesiona do serwisu, zeby oddzielic inicjalizacje od
-            //reszty
+            
             ViewBag.Subcategories = new List<Subcategory>() { };
             return View();
         }
@@ -52,20 +50,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public IActionResult CreateCategory(Category category)
         {
-            //public HttpResponseMessage Post(Product product)
-            //{
-            //    if (ModelState.IsValid)
-            //    {
-            //        // Do something with the product (not shown).
-
-            //        return new HttpResponseMessage(HttpStatusCode.OK);
-            //    }
-            //    else
-            //    {
-            //        return Request.CreateErrorResponse(HttpStatusCode.BadRequest, ModelState);
-            //    }
-            //wyzej przyklad ze stacka o co chodzi z isvalid- cvzyli czy poprawne dane z jasona przyszly
-            //oddzielic w srodku tworzenie listy subcategorii oraz dodawaniue nowych
+          
                 if (!ModelState.IsValid)
             {
                 // store Subcategories data which has been added
@@ -82,7 +67,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         public ViewResult EditCategory(int Id)
         {
 
-            //getcategory do serwisu  
+           
             var category = _categoriesRepository.GetCategory(Id);
 
             if (category == null)
@@ -98,8 +83,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public IActionResult EditCategory(Category category)
         {
-            //isvalid - cvzyli czy poprawne dane z jasona przyszly
-            //oddzielic w srodku tworzenie listy subcategorii oraz dodawaniue nowych
+            
 
             if (!ModelState.IsValid)
             {
@@ -116,8 +100,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public IActionResult DeleteCategory(int Id)
         {
-            //pobranie kategorii do serwisu
-            //usuniecie rowniez
+           
             var category = _categoriesRepository.GetCategory(Id);
 
             if (category == null)
@@ -153,8 +136,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
-            // logika tworzenia roli do servicce
-            //wszystko z identity nara
+           
             if(ModelState.IsValid)
             {
                 IdentityRole identityRole = new IdentityRole
@@ -180,8 +162,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpGet]
         public async Task<IActionResult> EditRole(string id)
         {
-            // logika edycji ról do servicce
-            //wszystko z identity nara
+           
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
@@ -210,8 +191,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public async Task<IActionResult> EditRole(EditRoleViewModel model)
         {
-            // logika edycji roli do servicce
-            //wszystko z identity nara
+          
             var role = await _roleManager.FindByIdAsync(model.Id);
 
             if (role == null)
@@ -238,8 +218,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteRole(string id)
         {
-            // logika usuwania roli do servicce
-            //wszystko z identity nara
+          
             var role = await _roleManager.FindByIdAsync(id);
 
             if (role == null)
@@ -260,8 +239,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteRole(EditRoleViewModel model)
         {
-            // logika usuwania roli do servicce
-            //wszystko z identity nara
+          
             var role = await _roleManager.FindByIdAsync(model.Id);
 
             if (role == null)
@@ -295,7 +273,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         public async Task<IActionResult> EditUsersInRole(string roleId)
         {
 
-            // logika edycji userow roli do servicce
+          
 
 
             ViewBag.roleId = roleId;
@@ -336,7 +314,7 @@ namespace AplikacjaFryzjer_v2.Controllers
         [HttpPost]
         public async Task<IActionResult> EditUsersInRole(List<UserRoleViewModel> model, string roleId)
         {
-            // logika edycji userow roli do servicce oraz całe zliczanie
+          
             var role = await _roleManager.FindByIdAsync(roleId);
 
             if (role == null)
