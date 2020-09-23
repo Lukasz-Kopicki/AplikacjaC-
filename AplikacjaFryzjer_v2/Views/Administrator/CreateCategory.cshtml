@@ -1,0 +1,43 @@
+﻿@model Application.Models.CategoryModel
+@{
+    ViewData["Title"] = "Dodaj nową kategorię";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var SubcategoriesData = (IList<Application.Models.SubcategoryModel>)ViewBag.Subcategories;
+}
+
+<h1>Dodaj nową kategorię</h1>
+
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label asp-for="Name"></label>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj kategorię</button>
+        </div>
+        <div class="col-md-6">
+            <div id="container">
+                <button class="btn btn-primary" type="button" id="addSubCategory">Dodaj podkategorię</button>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script>
+
+        $(document).ready(function (e) {
+            var i = @SubcategoriesData.Count()-1;
+            $("#addSubCategory").click(function (e) {
+                i++;
+                var name = '<div class="form-group row"><input name = "Subcategories['+i+'].Name" id='+i+' type="text"/><button type="button" class="btn btn-danger" id="removeSubcategory">Usuń</button></div>';
+                $("#addSubCategory").before(name);
+            });
+            $("#container").on('click', '#removeSubcategory', function (e) {
+                $(this).parent('div').remove();
+            });
+        });
+</script>

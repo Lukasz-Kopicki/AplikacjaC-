@@ -1,0 +1,64 @@
+﻿@model IEnumerable<Application.Models.ApplicationUserModel>
+
+@{
+    ViewData["Title"] = "Lista użytkowników";
+    int i = 0;
+}
+
+<h1>Lista użytkowników</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="width:auto"
+       asp-controller="account" asp-action="Register">
+        Dodaj użytkownika
+    </a><br />
+
+    <table id="tableUsers" class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Lp.</th>
+                <th>Nazwa użytkownika</th>
+                <th>Id użytkownika</th>
+                <th>Akcje</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.ToList())
+            {
+                i++;
+                <tr>
+                    <th scope="row">@i</th>
+                    <td>@user.UserName</td>
+                    <td>@user.Id</td>
+                    <td>
+                        <a class="btn btn-primary ml-2 mr-2"
+                           asp-controller="administrator" asp-action="EditRole" asp-route-id="@user.Id">
+                            Edytuj
+                        </a><a class="btn btn-danger ml-2 mr-2"
+                               asp-controller="administrator" asp-action="DeleteRole" asp-route-id="@user.Id">
+                            Usuń
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            Brak utworzonych użytkowników
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Kliknij poniższy przycisk aby utworzyć nowego użytkownika
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="account" asp-action="Register">
+                Dodaj użytkownika
+            </a>
+        </div>
+    </div>
+}

@@ -1,0 +1,26 @@
+﻿@model List<Application.ViewModels.UserRoleViewModel>
+
+@{  
+    var roleId = ViewBag.roleId;
+}
+
+    <form method="post">
+        <div class="card-header">
+            <h2>Dodaj do profilu lub usuń z profilu użytkowników</h2>
+        </div>
+        <div class="card-body">
+            @for(int i = 0; i <Model.Count; i++)
+            {
+            <div class="form-check m-1">
+                <input asp-for="@Model[i].UserId"type="hidden"/>
+                <input asp-for="@Model[i].UserName" type="hidden"/>
+                <input asp-for="@Model[i].IsSelected" class="form-check-input" />
+                <label asp-for="@Model[i].IsSelected" class="form-check-label">@Model[i].UserName</label>
+            </div>
+            }
+        </div>
+        <div class="card-footer">
+            <input type="submit" value="Aktualizuj" class="btn btn-primary" style="width:auto" />
+            <a asp-action="EditRole" asp-route-id="@roleId" class="btn btn-primary" style="width:auto">Odrzuć</a>
+        </div>
+    </form>

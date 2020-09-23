@@ -1,0 +1,95 @@
+﻿@model Application.ViewModels.RegisterViewModel
+@{
+    ViewData["Title"] = "Rejestracja";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Rejestracja</h1>
+
+<!--Cards to choice-->
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card" style="width: 18rem; height: 350px">
+            <img class="card-img-top" style="width: 18rem; height: 220px" src="~/img/userIcon.png" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Klient</h5>
+            </div>
+            <div class="card-body">
+                <button id="userRegister" class="btn btn-secondary">Zarejestruj</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div class="card" style="width: 18rem; height: 350px">
+            <img class="card-img-top" style="width: 18rem; height: 220px" src="~/img/companyIcon.jpg" alt="Card image cap">
+            <div class="card-body">
+                <h5 class="card-title">Salon</h5>
+            </div>
+            <div class="card-body">
+                <button id="companyRegister" class="btn btn-secondary">Zarejestruj</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--User form to registry-->
+<div style="display: none" id="userForm" class="col-md-6">
+    <form method="post">
+        <div class="form-group">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <label asp-for="FirstName"></label>
+            <input asp-for="FirstName" class="form-control" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+            <label asp-for="LastName"></label>
+            <input asp-for="LastName" class="form-control" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            <label asp-for="Key"></label>
+            <input asp-for="Key" class="form-control" />
+            <span asp-validation-for="Key" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Zarejestruj</button>
+    </form>
+</div>
+
+<!--Company form to registry-->
+<div style="display: none" id="companyForm" class="col-md-6">
+    <form method="post">
+        <div class="form-group">
+            <label asp-for="CompanyName"></label>
+            <input asp-for="CompanyName" class="form-control" />
+            <span asp-validation-for="CompanyName" class="text-danger"></span>
+            <label asp-for="Email"></label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <label asp-for="Password"></label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+            <label asp-for="ConfirmPassword"></label>
+            <input asp-for="ConfirmPassword" class="form-control" />
+            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-primary">Zarejestruj</button>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#userRegister").click(function () {
+            $("#userForm").show();
+            $("#companyForm").hide();
+        });
+        $("#companyRegister").click(function () {
+            $("#companyForm").show();
+            $("#userForm").hide();
+        });
+    });
+</script>

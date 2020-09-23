@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using DataAccessLogic.Entities
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+<nav class="navbar navbar-expand-lg bg-light navbar-light">
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        @if (SignInManager.IsSignedIn(User))
+        {
+        <ul class="navbar-nav">
+            @if (User.IsInRole("Admin"))
+            {
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Zarządzaj
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <a class="dropdown-item" asp-controller="Administrator"
+                           asp-action="ListUsers">Użytkownicy</a>
+                        <a class="dropdown-item" asp-controller="Administrator"
+                           asp-action="ListRoles">Profile</a>
+                        <a class="dropdown-item" asp-controller="Administrator"
+                           asp-action="ManageCategories">Kategorie</a>
+                    </div>
+                </li>
+            }
+            <li class="nav-item">
+                <a asp-controller="Administrator" asp-action="MyAccount" class="nav-link">@UserManager.GetUserName(User)</a>
+            </li>
+            <li class="nav-item">
+                <a asp-controller="Account" asp-action="Logout" class="nav-link">Wyloguj</a>
+            </li>
+        </ul>
+        }
+        else
+        {
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Register" class="nav-link">Zarejestruj</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Account" asp-action="Login" class="nav-link">Zaloguj</a>
+                </li>
+            </ul>
+        }
+
+    </div>
+</nav>

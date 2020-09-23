@@ -1,0 +1,117 @@
+﻿@model IEnumerable<Application.Models.CategoryModel>
+@{
+    ViewData["Title"] = "Zarządzanie kategoriami";
+}
+
+<h1>Zarządzanie kategoriami</h1>
+
+<!--List of categories-->
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="width:auto"
+       asp-controller="administrator" asp-action="createCategory">
+        Dodaj nową kategorię
+    </a>
+    <br />
+    <hr />
+    <br />
+    <h4>Lista kategorii</h4>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    @foreach (var category in Model.ToList())
+                    {
+                        <a class="list-group-item list-group-item-action" id="@category.Id" data-toggle="list" href="#list-@category.Id" role="tab" aria-controls="home">
+                            @category.Name
+                        </a>
+                    }
+                </div>
+            </div>
+            <div class="col-sm-8">
+                <div class="tab-content" id="nav-tabContent">
+                    @foreach (var category in Model.ToList())
+                    {<div class="tab-pane fade" id="list-@category.Id" role="tabpanel" aria-labelledby="list-profile-list">
+
+    <div class="float-right">
+        <a class="btn btn-primary"
+           asp-controller="administrator"
+           asp-action="EditCategory"
+           asp-route-id="@category.Id">
+            Edytuj
+        </a>
+        <button type="button" onclick="getId(@category.Id)" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
+            Usuń
+        </button>
+    </div>
+    Podkategorie:
+    @for (int i = 0; i < category.Subcategories.Count(); i++)
+    {
+        @(category.Subcategories[i].Name + ", ");
+    }
+</div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            Brak kategorii
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Kliknij poniższy przycisk aby utworzyć nową kategorię
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="administrator" asp-action="CreateCategory">
+                Stwórz kategorię
+            </a>
+        </div>
+    </div>
+}
+
+<!--Modal window "Delete" config-->
+<div id="myModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Usuwanie kategorii</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Czy na pewno chcesz usunąć kategorię ?</p>
+            </div>
+            <div class="modal-footer">
+                <form method="post">
+                    <button id="modalDeleteButton" type="submit" class="btn btn-primary"
+                            asp-controller="administrator"
+                            asp-action="DeleteCategory">
+                        Usuń
+                    </button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Anuluj</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--JavaScript modal click-->
+<script>
+    var clickId;
+    $("#myModal").on('show.bs.modal', function (event) {
+        $(event.currentTarget).find('asp-route-id').val(getId);
+        var btn = $(this).find('#modalDeleteButton');
+        console.log(clickId)
+        btn.attr('formaction', '/administrator/DeleteCategory/' + clickId);
+    });
+
+    function getId(clicked_id) {
+        this.clickId = clicked_id;
+    }
+</script>

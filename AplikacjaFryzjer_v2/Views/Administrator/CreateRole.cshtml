@@ -1,0 +1,21 @@
+﻿@model Application.ViewModels.CreateRoleViewModel
+@{
+    ViewData["Title"] = "Dodaj nowy profil";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Dodaj nowy profil</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="post">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="RoleName"></label>
+                <input asp-for="RoleName" />
+                <span asp-validation-for="RoleName" class="text-danger"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Dodaj profil</button>
+        </form>
+    </div>
+</div>

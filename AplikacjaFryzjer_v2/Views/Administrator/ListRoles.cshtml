@@ -1,0 +1,55 @@
+﻿@model IEnumerable<IdentityRole>
+
+@{
+    ViewData["Title"] = "Lista profili";
+}
+
+<h1>Wszystkie profile</h1>
+
+@if (Model.Any())
+{
+    <a class="btn btn-primary" style="width:auto"
+       asp-controller="administrator" asp-action="CreateRole">
+        Stwórz profil
+    </a>
+
+    foreach (var role in Model.ToList())
+    {
+        <div class="card-header">
+            <h5>ID Profilu: </h5>@role.Id
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                @role.Name
+            </h5>
+
+            <div class="card-footer">
+                <a class="btn btn-primary"
+                   asp-controller="administrator" asp-action="EditRole" asp-route-id="@role.Id">
+                    Edytuj
+                </a>
+                <a class="btn btn-danger"
+                   asp-controller="administrator" asp-action="DeleteRole" asp-route-id="@role.Id">
+                    Usuń
+                </a>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <div class="card">
+        <div class="card-header">
+            Brak utworzonych profili
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">
+                Kliknij poniższy przycisk aby utworzyć nowy profil
+            </h5>
+            <a class="btn btn-primary" style="width:auto"
+               asp-controller="administrator" asp-action="CreateRole">
+                Stwórz profil
+            </a>
+        </div>
+    </div>
+}

@@ -1,0 +1,37 @@
+﻿@model Application.ViewModels.LoginViewModel
+@{
+    ViewData["Title"] = "Logowanie";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Logowanie</h1>
+
+<div class="col-md-6">
+    <form method="post" asp-action="Login">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-control" />
+        <label asp-for="Password"></label>
+        <input asp-for="Password" class="form-control" />
+        <button type="submit" class="btn btn-primary">Zaloguj</button>
+    </form>
+    
+</div>
+<div class="col-md-6 offset-6">
+    <form method="post" asp-action="ExternalLogin" asp-route-returnUrl="@Model.ReturnUrl">
+        <div>
+            
+            @foreach (var provider in Model.ExternalLogins)
+            {
+                <button type="submit" class="btn btn-primary"
+                        name="provider" value="@provider.Name"
+                        title="Log in using your @provider.DisplayName account">
+                    @provider.DisplayName
+                </button><br />
+            }
+        </div>
+    </form>
+</div>
+
+
+
+

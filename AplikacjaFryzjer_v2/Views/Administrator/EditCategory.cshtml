@@ -1,0 +1,73 @@
+﻿@model Application.Models.CategoryModel
+@{
+    ViewData["Title"] = "Edytuj kategorię";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var SubcategoriesData = (IList<Application.Models.SubcategoryModel>)ViewBag.Subcategories;
+}
+
+<h1>Edytuj kategorię</h1>
+
+
+<form method="post">
+    <div class="form-group row">
+        <div class="col">
+            <div asp-validation-summary="All" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Name" class="col-sm-10 col-form-label"></label>
+                <div class="col-sm-10">
+                    <input asp-for="Name" disabled class="form-control" />
+                </div>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <button class="btn btn-primary" type="submit" id="update">Aktualizuj kategorię</button>
+        </div>
+        <div class="col">
+            @if (SubcategoriesData != null)
+            {
+                <div class="col-sm-10 col-form-label">
+                    <div id="subcatContainer">
+                        @foreach (var subcategory in SubcategoriesData.ToList())
+                        {
+                            <div class="form-group col-sm-6">
+                                <input asp-for="@subcategory.Name" />
+                                <button class="btn btn-danger" type="button" id="remove">Usuń</button>
+                                <span asp-validation-for="@subcategory.Name" class="text-danger"></span>
+                            </div>
+                        }
+                    </div>
+                    <button type="button" class="btn btn-secondary" id="add">Dodaj podkategorię</button>
+                </div>
+            }
+            else
+            {
+                <div id="container" class="col-md-6">
+                    <label id="labelName">Nazwa podkategorii</label>
+                    <input id="inputName" />
+                    <button type="button" class="btn btn-secondary" id="addNew">Dodaj</button>
+                </div>
+            }
+        </div>
+    </div>
+</form>
+    <script>
+        $(document).ready(function (e) {
+            // Variables
+            var i = @SubcategoriesData.Count()-1;
+           
+            // Add rows to the form
+            $("#add").click(function (e) {
+                var html = '<p /><div class="form-group col-sm-6"><input asp-for="Subcategories[' + i + '].Name" /><button class="btn btn-danger" type="button" id="remove">Usuń</button></div>';
+                i++;
+                $("#subcatContainer").append(html).before();
+            });
+
+            // Remove rows from the form
+            $("#subcatContainer").on('click', '#remove', function (e) {
+                i--;
+                $(this).parent('div').remove();
+
+            });
+
+            // Populate values from the first row
+        });
+    </script>
